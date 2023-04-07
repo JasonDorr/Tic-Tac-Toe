@@ -10,8 +10,10 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 30px;
+  background-color: gray;
 }
 
 .board-cell {
   text-align: center;
+  background-color: white;
 }
