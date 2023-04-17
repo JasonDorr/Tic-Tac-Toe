@@ -8,8 +8,14 @@ main {
   height: 100vh;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.player {
+  margin-bottom: 100px;
+  font-size: 40px;
 }
 
 .game-board {
@@ -18,11 +24,45 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 15px;
   background-color: gray;
 }
 
 .board-cell {
   text-align: center;
   background-color: white;
+}
+
+.gameOver {
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.gameOverElements {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.gameOverMessage {
+  font-size: 60px;
+  color: white;
+}
+
+.restart {
+  padding: 10px 40px;
+  font-size: 25px;
+}
+
+.hidden {
+  display: none;
 }

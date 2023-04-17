@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const Player = (sign) => {
   const playerSign = sign;
 
@@ -18,14 +19,31 @@ const gameBoard = (() => {
     board[index] = sign;
   };
 
+  const restart = () => {
+    displayController.toggleModal();
+    gameController.gameOver(false);
+    for (let i = 0; i < board.length; i++) {
+      setField(i, "");
+    }
+    displayController.removeDisplay();
+    displayController.buildDisplay();
+  };
+
   return {
     getField,
     setField,
+    restart,
   };
 })();
 
 const displayController = (() => {
   const fieldCells = Array.from(document.querySelectorAll(".board-cell"));
+  const playerDisplay = document.querySelector(".player");
+  const gameOverModal = document.querySelector(".gameOver");
+  const winnerMessage = document.querySelector(".gameOverMessage");
+  const restartBtn = document.querySelector(".restart");
+
+  playerDisplay.textContent = `X's Turn`;
 
   const updateBoard = () => {
     for (let i = 0; i < fieldCells.length; i++) {
@@ -33,15 +51,55 @@ const displayController = (() => {
     }
   };
 
-  fieldCells.forEach((cell) => {
-    cell.addEventListener("click", (e) => {
-      if (gameController.gameOver() || e.target.textContent !== "") return;
+  const toggleModal = (gameCheck) => {
+    if (gameCheck === "draw") {
+      playerDisplay.textContent = "Game Over";
+      winnerMessage.textContent = "Draw!";
+      gameOverModal.classList.toggle("hidden");
+    } else if (gameCheck === "X" || gameCheck === "O") {
+      playerDisplay.textContent = "Game Over";
+      winnerMessage.textContent = `${gameCheck} is the Winner!`;
+      gameOverModal.classList.toggle("hidden");
+    } else {
+      gameOverModal.classList.toggle("hidden");
+      playerDisplay.textContent = "X's Turn";
+    }
+  };
 
-      gameController.playRound(parseInt(e.target.dataset.index));
+  const buildDisplay = () => {
+    fieldCells.forEach((cell) => {
+      cell.addEventListener("click", (e) => {
+        if (gameController.gameOver() || e.target.textContent !== "") return;
 
-      updateBoard();
+        gameController.playRound(parseInt(e.target.dataset.index, 10));
+        playerDisplay.textContent = `${gameController.getCurrentPlayer()}'s Turn`;
+        updateBoard();
+      });
     });
-  });
+  };
+
+  buildDisplay();
+
+  const removeDisplay = () => {
+    fieldCells.forEach((cell) => {
+      cell.removeEventListener("click", (e) => {
+        if (gameController.gameOver() || e.target.textContent !== "") return;
+
+        gameController.playRound(parseInt(e.target.dataset.index, 10));
+        playerDisplay.textContent = `${gameController.getCurrentPlayer()}'s Turn`;
+        updateBoard();
+      });
+      cell.textContent = "";
+    });
+  };
+
+  restartBtn.addEventListener("click", gameBoard.restart);
+
+  return {
+    toggleModal,
+    buildDisplay,
+    removeDisplay,
+  };
 })();
 
 const gameController = (() => {
@@ -55,13 +113,18 @@ const gameController = (() => {
 
   const playRound = (index) => {
     gameBoard.setField(index, getCurrentPlayer());
+
     if (isWinner(index)) {
-      isOver = true;
+      gameOver(getCurrentPlayer());
+      displayController.toggleModal(isOver);
+      round = 1;
       return;
     }
 
     if (isDraw(round)) {
-      isOver = true;
+      gameOver("draw");
+      displayController.toggleModal(isOver);
+      round = 1;
       return;
     }
     round++;
@@ -90,7 +153,10 @@ const gameController = (() => {
       );
   };
 
-  const gameOver = () => isOver;
+  const gameOver = (boolean) => {
+    isOver = boolean;
+    return isOver;
+  };
 
   return {
     getCurrentPlayer,

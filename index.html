@@ -9,6 +9,7 @@
   </head>
   <body>
     <main>
+      <span class="player">Player Turn</span>
       <div class="game-board" id="game-board">
         <div class="board-cell" data-index="0"></div>
         <div class="board-cell" data-index="1"></div>
@@ -21,9 +22,11 @@
         <div class="board-cell" data-index="8"></div>
       </div>
     </main>
-    <div class="gameOver">
-      <span class="gameOverMessage">Wins</span>
-      <button class="restart">Restart</button>
+    <div class="gameOver hidden">
+      <div class="gameOverElements">
+        <span class="gameOverMessage">Wins</span>
+        <button class="restart">Restart</button>
+      </div>
     </div>
 
     <script src="app.js"></script>
