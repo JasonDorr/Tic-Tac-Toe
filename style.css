@@ -4,6 +4,9 @@
   box-sizing: border-box;
 }
 
+/* font-family: "Lobster Two", cursive; */
+/* font-family: "Righteous", cursive; */
+
 main {
   height: 100vh;
   width: 100%;
@@ -11,11 +14,14 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: rgb(49, 92, 128);
 }
 
 .player {
+  font-family: "Lobster Two", cursive;
+  color: lightgray;
   margin-bottom: 100px;
-  font-size: 40px;
+  font-size: 80px;
 }
 
 .game-board {
@@ -25,12 +31,19 @@ main {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 15px;
-  background-color: gray;
+  background-color: rgb(150, 150, 150);
+  border-radius: 10px;
+  box-shadow: 2px 2px 15px lightgray;
 }
 
 .board-cell {
+  font-family: "Righteous", cursive;
+  font-size: 100px;
+  color: lightgray;
   text-align: center;
-  background-color: white;
+  cursor: pointer;
+  background-color: rgb(33, 63, 87);
+  border-radius: 5px;
 }
 
 .gameOver {
@@ -50,17 +63,22 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 50px;
 }
 
 .gameOverMessage {
+  font-family: "Righteous", cursive;
   font-size: 60px;
-  color: white;
+  color: lightgray;
 }
 
 .restart {
+  font-family: "Righteous", cursive;
+  color: lightgray;
   padding: 10px 40px;
   font-size: 25px;
+  background-color: rgb(49, 92, 128);
+  border: 1px solid lightgray;
 }
 
 .hidden {
